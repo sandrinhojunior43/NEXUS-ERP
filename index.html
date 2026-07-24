@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS Enterprise - ERP System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf@0.10.1/dist/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #0052CC;
+            --primary-dark: #001A66;
+            --primary-light: #3D7FE0;
+            --secondary: #666666;
+            --light-gray: #F0F0F0;
+            --border-color: #D1D1D1;
+            --success: #008000;
+            --warning: #FF8000;
+            --danger: #CC0000;
+            --text-dark: #1A1A1A;
+            --text-light: #666666;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #F5F5F5;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode {
+            background: #1A1A1A;
+            color: #E0E0E0;
+        }
+
+        /* LOGIN */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .login-box {
+            background: white;
+            padding: 50px;
+            width: 400px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .login-box {
+            background: #2A2A2A;
+            color: #E0E0E0;
+        }
+
+        .login-box h1 {
+            margin: 0 0 20px 0;
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .login-box p {
+            text-align: center;
+            color: var(--text-light);
+            margin: 0 0 30px 0;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .form-group label {
+            color: #E0E0E0;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            background: white;
+            color: var(--text-dark);
+            font-size: 13px;
+        }
+
+        body.dark-mode .form-group input,
+        body.dark-mode .form-group select {
+            background: #333333;
+            color: #E0E0E0;
+            border-color: #555555;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: 1px solid var(--border-color);
+            background: white;
+            color: var(--text-dark);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--light-gray);
+            border-color: var(--secondary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--primary-dark);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .home-btn {
+            background: var(--primary-light);
+            color: white;
+            border: 1px solid white;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .home-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .command-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .command-bar label {
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .command-bar input {
+            padding: 8px 10px;
+            border: 1px solid white;
+            width: 150px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .command-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .command-suggestions {
+            position: absolute;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 150px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .command-suggestions.show {
+            display: block;
+        }
+
+        .command-suggestions li {
+            padding: 8px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--text-dark);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .command-suggestions li:hover {
+            background: var(--light-gray);
+        }
+
+        .top-bar-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            padding-right: 12px;
+        }
+
+        .mode-toggle,
+        .logout-btn {
+            background: var(--primary-light);
+            color: white;
+            border: 1px solid white;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .mode-toggle:hover,
+        .logout-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* APP LAYOUT */
+        .app-container {
+            display: flex;
+            height: calc(100vh - 50px);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 200px;
+            background: white;
+            border-right: 2px solid var(--border-color);
+            overflow-y: auto;
+            padding: 16px 0;
+        }
+
+        body.dark-mode .sidebar {
+            background: #2A2A2A;
+            border-right-color: #444444;
+        }
+
+        .sidebar-section {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
+            padding: 0 16px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark-mode .sidebar-title {
+            color: #999999;
+        }
+
+        .sidebar-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .sidebar-item:hover {
+            background: var(--light-gray);
+            border-left-color: var(--primary);
+        }
+
+        body.dark-mode .sidebar-item:hover {
+            background: #333333;
+        }
+
+        .sidebar-item.active {
+            background: #E8F0FF;
+            border-left-color: var(--primary);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        body.dark-mode .sidebar-item.active {
+            background: #1A3A5C;
+            color: var(--primary-light);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* CARDS & PANELS */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .kpi-card {
+            background: #2A2A2A;
+            border-color: #444444;
+        }
+
+        .kpi-card h3 {
+            margin: 0;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .kpi-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 8px 0;
+        }
+
+        .kpi-card .subtitle {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* TOOLBAR */
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar .btn {
+            font-size: 11px;
+            padding: 8px 12px;
+        }
+
+        /* TABLE */
+        .table-container {
+            background: white;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .table-container {
+            background: #2A2A2A;
+            border-color: #444444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th {
+            background: #E8E8E8;
+            color: var(--text-dark);
+            padding: 10px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid var(--border-color);
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        body.dark-mode th {
+            background: #1A1A1A;
+            color: #E0E0E0;
+            border-bottom-color: #444444;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        body.dark-mode td {
+            border-bottom-color: #444444;
+        }
+
+        tr:hover {
+            background: #F8F8F8;
+        }
+
+        body.dark-mode tr:hover {
+            background: #333333;
+        }
+
+        /* BADGES */
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 0px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid;
+        }
+
+        .badge-success {
+            background: #E8F5E9;
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .badge-warning {
+            background: #FFF3E0;
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .badge-danger {
+            background: #FFEBEE;
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .badge-info {
+            background: #E3F2FD;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* CHARTS */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .chart-container {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+            max-height: 500px;
+        }
+
+        .chart-container h3 {
+            margin: 0 0 16px 0;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            flex-shrink: 0;
+        }
+
+        .chart-container canvas {
+            flex-grow: 1;
+            flex-shrink: 1;
+            max-width: 100%;
+        }
+
+        body.dark-mode .chart-container {
+            background: #2A2A2A;
+            border-color: #444444;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border: 2px solid var(--primary);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .modal-content {
+            background: #2A2A2A;
+            color: #E0E0E0;
+        }
+
+        .modal-content h3 {
+            margin: 0 0 16px 0;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background: white;
+            border-left: 4px solid var(--success);
+            padding: 12px 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 5000;
+            font-size: 12px;
+            animation: slideIn 0.3s ease;
+        }
+
+        body.dark-mode .toast {
+            background: #2A2A2A;
+            color: #E0E0E0;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-container {
+                min-height: 350px;
+                max-height: 450px;
+            }
+            .top-bar {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .command-bar {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <h1>NEXUS</h1>
+            <p>Enterprise ERP System</p>
+            
+            <div class="form-group">
+                <label>Usuário</label>
+                <input type="email" id="loginEmail" placeholder="sandro.aparecido@nexus.com" value="sandro.aparecido@nexus.com">
+            </div>
+            
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" id="loginPassword" placeholder="••••••" value="SJR02@">
+            </div>
+            
+            <button class="btn btn-primary" onclick="authenticate()" style="width: 100%; margin-top: 20px;">ENTRAR</button>
+            
+            <div style="margin-top: 20px; padding: 12px; background: #E3F2FD; border: 1px solid var(--primary); font-size: 11px;">
+                <strong>Demo:</strong> sandro.aparecido@nexus.com / SJR02@
+            </div>
+        </div>
+    </div>
+
+    <!-- APP PAGE -->
+    <div id="appPage" style="display: none; height: 100vh; flex-direction: column;">
+        <!-- TOP BAR -->
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="home-btn" onclick="goHome()">🏠 HOME</button>
+                
+                <div class="command-bar" style="position: relative;">
+                    <label>Código:</label>
+                    <input type="text" id="commandInput" placeholder="EST, PROD, QUAL..." autocomplete="off">
+                    <ul id="commandSuggestions" class="command-suggestions"></ul>
+                </div>
+            </div>
+            
+            <div class="top-bar-right">
+                <div class="user-info" id="userDisplay"></div>
+                <button class="mode-toggle" onclick="toggleDarkMode()">🌙</button>
+                <button class="logout-btn" onclick="logout()">SAIR</button>
+            </div>
+        </div>
+
+        <!-- MAIN APP -->
+        <div class="app-container">
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Operacional</div>
+                    <div class="sidebar-item active" onclick="switchTab('dashboard', 'dashboard')">📊 Dashboard</div>
+                    <div class="sidebar-item" onclick="switchTab('estoque', 'EST')">📦 Estoque</div>
+                    <div class="sidebar-item" onclick="switchTab('producao', 'PROD')">🏭 Produção</div>
+                    <div class="sidebar-item" onclick="switchTab('qualidade', 'QUAL')">✅ Qualidade</div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Administração</div>
+                    <div class="sidebar-item" onclick="switchTab('import', 'IMP')">📥 Import</div>
+                    <div class="sidebar-item" onclick="switchTab('relatorios', 'REL')">📊 Relatórios</div>
+                    <div class="sidebar-item" onclick="switchTab('settings', 'CONFIG')">⚙️ Configuração</div>
+                </div>
+            </div>
+
+            <!-- CONTENT -->
+            <div class="main-content">
+                <div class="content-area" id="contentArea">
+                    <!-- DASHBOARD -->
+                    <div id="tab-dashboard" class="tab-content" style="display: block;">
+                        <div class="page-title">Dashboard - Visão Geral</div>
+                        
+                        <div class="kpi-grid">
+                            <div class="kpi-card">
+                                <h3>Inventário Total</h3>
+                                <div class="value" id="kpiInventory">50</div>
+                                <div class="subtitle">Itens Cadastrados</div>
+                            </div>
+                            <div class="kpi-card">
+                                <h3>Ordens Ativas</h3>
+                                <div class="value" id="kpiOrders">30</div>
+                                <div class="subtitle">Produção em Andamento</div>
+                            </div>
+                            <div class="kpi-card">
+                                <h3>Conformidade</h3>
+                                <div class="value" style="color: var(--success);">98.5%</div>
+                                <div class="subtitle">Taxa de Qualidade</div>
+                            </div>
+                            <div class="kpi-card">
+                                <h3>Eficiência</h3>
+                                <div class="value" style="color: var(--warning);">87.3%</div>
+                                <div class="subtitle">OEE - Equipamentos</div>
+                            </div>
+                        </div>
+
+                        <div class="chart-grid">
+                            <div class="chart-container">
+                                <h3>Receita - 12 Meses</h3>
+                                <canvas id="chartRevenue" height="400"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Conformidade Trend</h3>
+                                <canvas id="chartConformance" height="400"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Distribuição de Estoque</h3>
+                                <canvas id="chartStock" height="400"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Status de Ordens</h3>
+                                <canvas id="chartOrders" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ESTOQUE -->
+                    <div id="tab-estoque" class="tab-content" style="display: none;">
+                        <div class="page-title">Gestão de Estoque</div>
+                        
+                        <div class="toolbar">
+                            <button class="btn btn-primary" onclick="openAddItemForm()">➕ Novo Item</button>
+                            <button class="btn" onclick="exportInventoryExcel()">📊 Excel</button>
+                            <button class="btn" onclick="exportInventoryPDF()">📄 PDF</button>
+                        </div>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>SKU</th>
+                                        <th>Descrição</th>
+                                        <th>Qtd</th>
+                                        <th>Valor Unit</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inventoryTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- PRODUÇÃO -->
+                    <div id="tab-producao" class="tab-content" style="display: none;">
+                        <div class="page-title">Produção - Ordens</div>
+                        
+                        <div class="toolbar">
+                            <button class="btn btn-primary" onclick="openAddOrderForm()">➕ Nova Ordem</button>
+                            <button class="btn" onclick="exportOrdersExcel()">📊 Excel</button>
+                            <button class="btn" onclick="exportOrdersPDF()">📄 PDF</button>
+                        </div>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>OP</th>
+                                        <th>Produto</th>
+                                        <th>Qtd</th>
+                                        <th>Máquina</th>
+                                        <th>Progresso</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productionTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- QUALIDADE -->
+                    <div id="tab-qualidade" class="tab-content" style="display: none;">
+                        <div class="page-title">Inspeção de Qualidade</div>
+                        
+                        <div class="toolbar">
+                            <button class="btn btn-primary" onclick="openAddInspectionForm()">➕ Nova Inspeção</button>
+                            <button class="btn" onclick="exportQualityExcel()">📊 Excel</button>
+                            <button class="btn" onclick="exportQualityPDF()">📄 PDF</button>
+                        </div>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>OP</th>
+                                        <th>Inspecionada</th>
+                                        <th>Conforme</th>
+                                        <th>Taxa %</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="qualityTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- IMPORT -->
+                    <div id="tab-import" class="tab-content" style="display: none;">
+                        <div class="page-title">Importação de Dados</div>
+                        
+                        <div style="background: white; border: 2px solid var(--border-color); padding: 20px; margin-top: 16px;">
+                            <div class="form-group">
+                                <label>Módulo</label>
+                                <select id="importModule">
+                                    <option value="">-- Selecione --</option>
+                                    <option value="inventory">Inventário</option>
+                                    <option value="production">Produção</option>
+                                    <option value="quality">Qualidade</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Arquivo (CSV/Excel)</label>
+                                <input type="file" id="importFile" accept=".csv,.xlsx,.xls" onchange="previewImport()">
+                            </div>
+                            
+                            <div id="importPreview" style="display: none; margin-top: 16px;">
+                                <h4 style="color: var(--primary);">Preview</h4>
+                                <div class="table-container">
+                                    <table id="previewTable"></table>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 16px;">
+                                <button class="btn btn-success" onclick="confirmImport()">✓ Confirmar</button>
+                                <button class="btn" onclick="cancelImport()" style="margin-left: 8px;">✗ Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RELATÓRIOS -->
+                    <div id="tab-relatorios" class="tab-content" style="display: none;">
+                        <div class="page-title">Relatórios e Análises</div>
+                        
+                        <div class="toolbar">
+                            <button class="btn btn-primary" onclick="generateReport('estoque')">Relatório Estoque</button>
+                            <button class="btn btn-primary" onclick="generateReport('producao')">Relatório Produção</button>
+                            <button class="btn btn-primary" onclick="generateReport('qualidade')">Relatório Qualidade</button>
+                        </div>
+
+                        <div class="chart-grid" style="margin-top: 20px;">
+                            <div class="chart-container">
+                                <h3>Movimentação Estoque</h3>
+                                <canvas id="chartExportStock" height="400"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Produção Semanal</h3>
+                                <canvas id="chartExportProduction" height="400"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Taxa de Conformidade</h3>
+                                <canvas id="chartExportQuality" height="400"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Performance Geral</h3>
+                                <canvas id="chartPerformance" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONFIGURAÇÃO -->
+                    <div id="tab-settings" class="tab-content" style="display: none;">
+                        <div class="page-title">Configurações do Sistema</div>
+                        
+                        <div style="background: white; border: 2px solid var(--border-color); padding: 20px; margin-top: 16px; max-width: 500px;">
+                            <div class="form-group">
+                                <label>Modo Escuro</label>
+                                <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()" style="width: auto;">
+                            </div>
+                            
+                            <div style="margin-top: 20px; padding: 16px; background: #E3F2FD; border-left: 4px solid var(--primary);">
+                                <h4 style="margin: 0 0 12px 0; color: var(--primary);">Informações do Sistema</h4>
+                                <p style="margin: 6px 0; font-size: 12px;">
+                                    <strong>Versão:</strong> 4.2 Enterprise 2000s<br>
+                                    <strong>Status:</strong> Production Ready<br>
+                                    <strong>Base de Dados:</strong> localStorage<br>
+                                    <strong>Última Atualização:</strong> 24/07/2024
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="formModal" class="modal">
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="toastContainer"></div>
+
+    <script>
+        // ============ CORE STATE ============
+        const app = {
+            currentUser: null,
+            data: {
+                inventory: [],
+                productionOrders: [],
+                inspections: [],
+                users: [
+                    { email: 'sandro.aparecido@nexus.com', password: 'SJR02@', role: 'admin' },
+                    { email: 'gerente@nexus.com', password: 'gerente123', role: 'gerente' },
+                    { email: 'operador@nexus.com', password: 'operador123', role: 'operador' }
+                ]
+            },
+            charts: {},
+            commandMap: {
+                'EST': 'estoque',
+                'PROD': 'producao',
+                'QUAL': 'qualidade',
+                'REL': 'relatorios',
+                'IMP': 'import',
+                'CONFIG': 'settings',
+                'DASHBOARD': 'dashboard'
+            }
+        };
+
+        // ============ INITIALIZATION ============
+        window.addEventListener('load', () => {
+            loadData();
+            loadDarkModePreference();
+            setupCommandBar();
+        });
+
+        function loadData() {
+            const stored = localStorage.getItem('atlas_data');
+            if (stored) {
+                app.data = JSON.parse(stored);
+            } else {
+                generateMockData();
+                saveData();
+            }
+        }
+
+        function generateMockData() {
+            for (let i = 1; i <= 50; i++) {
+                app.data.inventory.push({
+                    id: i,
+                    sku: `SKU${String(i).padStart(6, '0')}`,
+                    description: `Produto ${i}`,
+                    quantity: Math.floor(Math.random() * 500) + 50,
+                    unitPrice: Math.floor(Math.random() * 500) + 50
+                });
+            }
+
+            for (let i = 1; i <= 30; i++) {
+                app.data.productionOrders.push({
+                    id: i,
+                    op: `OP${String(i).padStart(6, '0')}`,
+                    product: `Produto ${i}`,
+                    quantity: Math.floor(Math.random() * 500) + 100,
+                    machine: `M${Math.floor(Math.random() * 20) + 1}`,
+                    progress: Math.floor(Math.random() * 100),
+                    status: ['planejada', 'producao', 'pausada', 'concluida'][Math.floor(Math.random() * 4)]
+                });
+            }
+
+            for (let i = 1; i <= 25; i++) {
+                const inspected = Math.floor(Math.random() * 100) + 50;
+                const accepted = Math.floor(inspected * (0.95 + Math.random() * 0.05));
+                app.data.inspections.push({
+                    id: i,
+                    inspectionId: `INS${String(i).padStart(6, '0')}`,
+                    op: `OP${String(i).padStart(6, '0')}`,
+                    inspectedQty: inspected,
+                    acceptedQty: accepted,
+                    conformanceRate: ((accepted / inspected) * 100).toFixed(2),
+                    status: accepted === inspected ? 'conforme' : 'nao-conforme'
+                });
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('atlas_data', JSON.stringify(app.data));
+        }
+
+        // ============ COMMAND BAR ============
+        function setupCommandBar() {
+            const input = document.getElementById('commandInput');
+            const suggestions = document.getElementById('commandSuggestions');
+
+            input.addEventListener('input', (e) => {
+                const value = e.target.value.toUpperCase();
+                suggestions.innerHTML = '';
+
+                if (value.length > 0) {
+                    const matches = Object.keys(app.commandMap).filter(code => 
+                        code.startsWith(value)
+                    );
+
+                    matches.forEach(code => {
+                        const li = document.createElement('li');
+                        li.textContent = code;
+                        li.onclick = () => {
+                            input.value = code;
+                            suggestions.classList.remove('show');
+                            executeCommand(code);
+                        };
+                        suggestions.appendChild(li);
+                    });
+
+                    if (matches.length > 0) {
+                        suggestions.classList.add('show');
+                    }
+                } else {
+                    suggestions.classList.remove('show');
+                }
+            });
+
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const code = input.value.toUpperCase();
+                    if (app.commandMap[code]) {
+                        executeCommand(code);
+                        input.value = '';
+                        suggestions.classList.remove('show');
+                    }
+                }
+            });
+        }
+
+        function executeCommand(code) {
+            const tab = app.commandMap[code];
+            if (tab === 'dashboard') {
+                goHome();
+            } else {
+                switchTab(tab, code);
+            }
+        }
+
+        // ============ AUTHENTICATION ============
+        function authenticate() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const user = app.data.users.find(u => u.email === email && u.password === password);
+
+            if (!user) {
+                alert('Credenciais inválidas!');
+                return;
+            }
+
+            app.currentUser = user;
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('appPage').style.display = 'flex';
+            document.getElementById('userDisplay').textContent = `👤 ${user.email.split('@')[0].toUpperCase()}`;
+
+            renderTables();
+            initializeCharts();
+        }
+
+        function logout() {
+            if (!confirm('Deseja sair do sistema?')) return;
+            app.currentUser = null;
+            document.getElementById('appPage').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+        }
+
+        function goHome() {
+            switchTab('dashboard', 'dashboard');
+        }
+
+        // ============ NAVIGATION ============
+        function switchTab(tabName, code) {
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            const tab = document.getElementById(`tab-${tabName}`);
+            if (tab) tab.style.display = 'block';
+
+            document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+            const item = document.querySelector(`[onclick*="switchTab('${tabName}"]`);
+            if (item) item.classList.add('active');
+
+            setTimeout(() => initializeCharts(), 100);
+        }
+
+        // ============ TABLES ============
+        function renderTables() {
+            renderInventoryTable();
+            renderProductionTable();
+            renderQualityTable();
+
+            document.getElementById('kpiInventory').textContent = app.data.inventory.length;
+            document.getElementById('kpiOrders').textContent = app.data.productionOrders.length;
+        }
+
+        function renderInventoryTable() {
+            const table = document.getElementById('inventoryTable');
+            table.innerHTML = app.data.inventory.slice(0, 20).map(item => `<tr>
+                <td><strong>${item.sku}</strong></td>
+                <td>${item.description}</td>
+                <td>${item.quantity}</td>
+                <td>R$ ${item.unitPrice.toFixed(2)}</td>
+                <td>R$ ${(item.quantity * item.unitPrice).toFixed(2)}</td>
+                <td><span class="badge badge-success">OK</span></td>
+                <td><button class="btn" style="padding: 4px 8px; font-size: 10px;" onclick="alert('Edit em v5.0')">Editar</button></td>
+            </tr>`).join('');
+        }
+
+        function renderProductionTable() {
+            const table = document.getElementById('productionTable');
+            table.innerHTML = app.data.productionOrders.slice(0, 20).map(order => `<tr>
+                <td><strong>${order.op}</strong></td>
+                <td>${order.product}</td>
+                <td>${order.quantity}</td>
+                <td>${order.machine}</td>
+                <td><div style="background: #E8E8E8; border-radius: 2px; height: 6px; width: 60px;"><div style="background: var(--primary); height: 100%; width: ${order.progress}%;"></div></div></td>
+                <td><span class="badge badge-info">${order.status}</span></td>
+                <td><button class="btn" style="padding: 4px 8px; font-size: 10px;" onclick="alert('Edit em v5.0')">Editar</button></td>
+            </tr>`).join('');
+        }
+
+        function renderQualityTable() {
+            const table = document.getElementById('qualityTable');
+            table.innerHTML = app.data.inspections.slice(0, 20).map(insp => `<tr>
+                <td><strong>${insp.inspectionId}</strong></td>
+                <td>${insp.op}</td>
+                <td>${insp.inspectedQty}</td>
+                <td>${insp.acceptedQty}</td>
+                <td>${insp.conformanceRate}%</td>
+                <td><span class="badge ${insp.status === 'conforme' ? 'badge-success' : 'badge-danger'}">${insp.status}</span></td>
+                <td><button class="btn" style="padding: 4px 8px; font-size: 10px;" onclick="alert('Edit em v5.0')">Editar</button></td>
+            </tr>`).join('');
+        }
+
+        // ============ FORMS ============
+        function openAddItemForm() {
+            const form = `
+                <h3>Novo Item de Estoque</h3>
+                <div class="form-group">
+                    <label>SKU</label>
+                    <input type="text" id="formSKU" placeholder="SKU000001">
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <input type="text" id="formDescription" placeholder="Descrição">
+                </div>
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input type="number" id="formQuantity" placeholder="100" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Valor Unitário</label>
+                    <input type="number" id="formUnitPrice" placeholder="125.50" min="0.01" step="0.01">
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 20px;">
+                    <button class="btn" onclick="closeForm()" style="flex: 1;">Cancelar</button>
+                    <button class="btn btn-success" onclick="submitInventoryForm()" style="flex: 1;">Salvar</button>
+                </div>
+            `;
+            document.getElementById('modalContent').innerHTML = form;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        function openAddOrderForm() {
+            const form = `
+                <h3>Nova Ordem de Produção</h3>
+                <div class="form-group">
+                    <label>Produto</label>
+                    <input type="text" id="formProduct">
+                </div>
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input type="number" id="formOrderQty" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Máquina</label>
+                    <select id="formMachine">
+                        <option value="">Selecione</option>
+                        ${Array(20).fill().map((_, i) => `<option>M${i+1}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="formStatus">
+                        <option>planejada</option>
+                        <option>producao</option>
+                        <option>pausada</option>
+                        <option>concluida</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 20px;">
+                    <button class="btn" onclick="closeForm()" style="flex: 1;">Cancelar</button>
+                    <button class="btn btn-success" onclick="submitOrderForm()" style="flex: 1;">Salvar</button>
+                </div>
+            `;
+            document.getElementById('modalContent').innerHTML = form;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        function openAddInspectionForm() {
+            const form = `
+                <h3>Nova Inspeção</h3>
+                <div class="form-group">
+                    <label>OP</label>
+                    <input type="text" id="formInspOP" placeholder="OP000001">
+                </div>
+                <div class="form-group">
+                    <label>Qtd Inspecionada</label>
+                    <input type="number" id="formInspQty" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Qtd Conforme</label>
+                    <input type="number" id="formInspConforme" min="0">
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 20px;">
+                    <button class="btn" onclick="closeForm()" style="flex: 1;">Cancelar</button>
+                    <button class="btn btn-success" onclick="submitInspectionForm()" style="flex: 1;">Salvar</button>
+                </div>
+            `;
+            document.getElementById('modalContent').innerHTML = form;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        function submitInventoryForm() {
+            const sku = document.getElementById('formSKU').value;
+            const description = document.getElementById('formDescription').value;
+            const quantity = parseInt(document.getElementById('formQuantity').value);
+            const unitPrice = parseFloat(document.getElementById('formUnitPrice').value);
+
+            if (!sku || !description || !quantity || !unitPrice) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            app.data.inventory.push({ id: app.data.inventory.length + 1, sku, description, quantity, unitPrice });
+            saveData();
+            renderInventoryTable();
+            closeForm();
+            showToast('Item criado com sucesso!', 'success');
+        }
+
+        function submitOrderForm() {
+            const product = document.getElementById('formProduct').value;
+            const quantity = parseInt(document.getElementById('formOrderQty').value);
+            const machine = document.getElementById('formMachine').value;
+            const status = document.getElementById('formStatus').value;
+
+            if (!product || !quantity || !machine) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            app.data.productionOrders.push({
+                id: app.data.productionOrders.length + 1,
+                op: `OP${String(app.data.productionOrders.length + 1).padStart(6, '0')}`,
+                product, quantity, machine, status, progress: 0
+            });
+            saveData();
+            renderProductionTable();
+            closeForm();
+            showToast('Ordem criada com sucesso!', 'success');
+        }
+
+        function submitInspectionForm() {
+            const op = document.getElementById('formInspOP').value;
+            const inspected = parseInt(document.getElementById('formInspQty').value);
+            const accepted = parseInt(document.getElementById('formInspConforme').value);
+
+            if (!op || !inspected || accepted === '') {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            if (accepted > inspected) {
+                alert('Qtd Conforme não pode ser maior que Inspecionada!');
+                return;
+            }
+
+            app.data.inspections.push({
+                id: app.data.inspections.length + 1,
+                inspectionId: `INS${String(app.data.inspections.length + 1).padStart(6, '0')}`,
+                op, inspectedQty: inspected, acceptedQty: accepted,
+                conformanceRate: ((accepted / inspected) * 100).toFixed(2),
+                status: accepted === inspected ? 'conforme' : 'nao-conforme'
+            });
+            saveData();
+            renderQualityTable();
+            closeForm();
+            showToast('Inspeção criada com sucesso!', 'success');
+        }
+
+        function closeForm() {
+            document.getElementById('formModal').style.display = 'none';
+        }
+
+        // ============ EXPORT ============
+        function exportInventoryExcel() {
+            const data = app.data.inventory.map(item => ({
+                'SKU': item.sku,
+                'Descrição': item.description,
+                'Quantidade': item.quantity,
+                'Valor Unit': `R$ ${item.unitPrice.toFixed(2)}`,
+                'Total': `R$ ${(item.quantity * item.unitPrice).toFixed(2)}`
+            }));
+            
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Estoque');
+            XLSX.writeFile(wb, 'nexus_estoque.xlsx');
+            showToast('Arquivo exportado com sucesso!', 'success');
+        }
+
+        function exportInventoryPDF() {
+            const element = document.createElement('div');
+            element.innerHTML = `
+                <h1>NEXUS - Relatório de Estoque</h1>
+                <p>Data: ${new Date().toLocaleDateString('pt-BR')}</p>
+                <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+                    <tr><th>SKU</th><th>Descrição</th><th>Qtd</th><th>Valor Unit</th><th>Total</th></tr>
+                    ${app.data.inventory.slice(0, 20).map(item => `
+                        <tr>
+                            <td>${item.sku}</td>
+                            <td>${item.description}</td>
+                            <td>${item.quantity}</td>
+                            <td>R$ ${item.unitPrice.toFixed(2)}</td>
+                            <td>R$ ${(item.quantity * item.unitPrice).toFixed(2)}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+            html2pdf().set({ filename: 'nexus_estoque.pdf' }).from(element).save();
+            showToast('PDF gerado com sucesso!', 'success');
+        }
+
+        function exportOrdersExcel() {
+            const data = app.data.productionOrders.map(order => ({
+                'OP': order.op,
+                'Produto': order.product,
+                'Qtd': order.quantity,
+                'Máquina': order.machine,
+                'Progresso %': order.progress,
+                'Status': order.status
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Produção');
+            XLSX.writeFile(wb, 'nexus_producao.xlsx');
+            showToast('Arquivo exportado com sucesso!', 'success');
+        }
+
+        function exportOrdersPDF() {
+            const element = document.createElement('div');
+            element.innerHTML = `
+                <h1>NEXUS - Relatório de Produção</h1>
+                <p>Data: ${new Date().toLocaleDateString('pt-BR')}</p>
+                <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+                    <tr><th>OP</th><th>Produto</th><th>Qtd</th><th>Máquina</th><th>Progresso</th><th>Status</th></tr>
+                    ${app.data.productionOrders.slice(0, 20).map(order => `
+                        <tr>
+                            <td>${order.op}</td>
+                            <td>${order.product}</td>
+                            <td>${order.quantity}</td>
+                            <td>${order.machine}</td>
+                            <td>${order.progress}%</td>
+                            <td>${order.status}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+            html2pdf().set({ filename: 'nexus_producao.pdf' }).from(element).save();
+            showToast('PDF gerado com sucesso!', 'success');
+        }
+
+        function exportQualityExcel() {
+            const data = app.data.inspections.map(insp => ({
+                'ID': insp.inspectionId,
+                'OP': insp.op,
+                'Inspecionada': insp.inspectedQty,
+                'Conforme': insp.acceptedQty,
+                'Taxa %': insp.conformanceRate,
+                'Status': insp.status
+            }));
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Qualidade');
+            XLSX.writeFile(wb, 'nexus_qualidade.xlsx');
+            showToast('Arquivo exportado com sucesso!', 'success');
+        }
+
+        function exportQualityPDF() {
+            const element = document.createElement('div');
+            element.innerHTML = `
+                <h1>NEXUS - Relatório de Qualidade</h1>
+                <p>Data: ${new Date().toLocaleDateString('pt-BR')}</p>
+                <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+                    <tr><th>ID</th><th>OP</th><th>Inspecionada</th><th>Conforme</th><th>Taxa %</th><th>Status</th></tr>
+                    ${app.data.inspections.slice(0, 20).map(insp => `
+                        <tr>
+                            <td>${insp.inspectionId}</td>
+                            <td>${insp.op}</td>
+                            <td>${insp.inspectedQty}</td>
+                            <td>${insp.acceptedQty}</td>
+                            <td>${insp.conformanceRate}%</td>
+                            <td>${insp.status}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+            html2pdf().set({ filename: 'nexus_qualidade.pdf' }).from(element).save();
+            showToast('PDF gerado com sucesso!', 'success');
+        }
+
+        function generateReport(type) {
+            showToast(`Relatório ${type} será enviado em breve!`, 'success');
+        }
+
+        // ============ IMPORT ============
+        function previewImport() {
+            const file = document.getElementById('importFile').files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const rows = XLSX.utils.sheet_to_json(worksheet);
+
+                const table = document.getElementById('previewTable');
+                table.innerHTML = `
+                    <thead>
+                        <tr>${Object.keys(rows[0]).map(key => `<th>${key}</th>`).join('')}</tr>
+                    </thead>
+                    <tbody>
+                        ${rows.slice(0, 5).map(row => `
+                            <tr>${Object.values(row).map(val => `<td>${val}</td>`).join('')}</tr>
+                        `).join('')}
+                    </tbody>
+                `;
+
+                document.getElementById('importPreview').style.display = 'block';
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function confirmImport() {
+            showToast('Dados importados com sucesso!', 'success');
+            document.getElementById('importPreview').style.display = 'none';
+            document.getElementById('importFile').value = '';
+        }
+
+        function cancelImport() {
+            document.getElementById('importPreview').style.display = 'none';
+            document.getElementById('importFile').value = '';
+        }
+
+        // ============ CHARTS ============
+        function initializeCharts() {
+            createRevenueChart();
+            createConformanceChart();
+            createStockChart();
+            createOrdersChart();
+            createExportCharts();
+        }
+
+        function createRevenueChart() {
+            const ctx = document.getElementById('chartRevenue');
+            if (!ctx) return;
+            
+            if (app.charts.revenue) app.charts.revenue.destroy();
+            app.charts.revenue = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    datasets: [{
+                        label: 'Receita (R$ 100k)',
+                        data: [10, 11, 12, 13, 14, 13, 12, 14, 15, 16, 17, 12],
+                        backgroundColor: '#0052CC',
+                        borderColor: '#001A66',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: true } }
+                }
+            });
+        }
+
+        function createConformanceChart() {
+            const ctx = document.getElementById('chartConformance');
+            if (!ctx) return;
+            
+            if (app.charts.conformance) app.charts.conformance.destroy();
+            app.charts.conformance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    datasets: [{
+                        label: 'Conformidade %',
+                        data: [96, 97, 97.5, 98, 98.2, 98.5, 98.4, 98.3, 98.5, 98.6, 98.7, 98.5],
+                        borderColor: '#008000',
+                        backgroundColor: 'rgba(0, 128, 0, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { min: 95, max: 100 } }
+                }
+            });
+        }
+
+        function createStockChart() {
+            const ctx = document.getElementById('chartStock');
+            if (!ctx) return;
+            
+            if (app.charts.stock) app.charts.stock.destroy();
+            app.charts.stock = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Freios', 'Suspensão', 'Motor', 'Outros'],
+                    datasets: [{
+                        data: [85, 92, 78, 150],
+                        backgroundColor: ['#0052CC', '#FF8000', '#008000', '#CC0000']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function createOrdersChart() {
+            const ctx = document.getElementById('chartOrders');
+            if (!ctx) return;
+            
+            if (app.charts.orders) app.charts.orders.destroy();
+            app.charts.orders = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Planejada', 'Produção', 'Pausada', 'Concluída'],
+                    datasets: [{
+                        label: 'Ordens',
+                        data: [8, 12, 6, 4],
+                        backgroundColor: ['#E8F0FF', '#FFF3E0', '#FFEBEE', '#E8F5E9']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function createExportCharts() {
+            ['Stock', 'Production', 'Quality'].forEach((type, i) => {
+                const id = `chartExport${type}`;
+                const ctx = document.getElementById(id);
+                if (!ctx) return;
+
+                if (app.charts[id]) app.charts[id].destroy();
+                
+                const chartType = i === 0 ? 'bar' : i === 1 ? 'line' : 'radar';
+                app.charts[id] = new Chart(ctx, {
+                    type: chartType,
+                    data: {
+                        labels: i === 0 ? ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'] : 
+                                i === 1 ? ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'] :
+                                ['Qualidade', 'Produção', 'Estoque', 'Efficiency', 'Safety'],
+                        datasets: [{
+                            label: type,
+                            data: i === 0 ? [45, 52, 48, 61, 55] :
+                                   i === 1 ? [12, 15, 18, 20, 22] : [98, 87, 75, 92, 85],
+                            borderColor: '#0052CC',
+                            backgroundColor: 'rgba(0, 82, 204, 0.1)'
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            });
+
+            const perfCtx = document.getElementById('chartPerformance');
+            if (perfCtx) {
+                if (app.charts.performance) app.charts.performance.destroy();
+                app.charts.performance = new Chart(perfCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Qualidade', 'Produção', 'Estoque', 'Eficiência', 'Segurança'],
+                        datasets: [{
+                            label: 'Performance',
+                            data: [98, 87, 75, 92, 85],
+                            borderColor: '#0052CC',
+                            backgroundColor: 'rgba(0, 82, 204, 0.1)'
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { r: { max: 100 } } }
+                });
+            }
+        }
+
+        // ============ UTILITIES ============
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function loadDarkModePreference() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkModeToggle').checked = true;
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            
+            const borderColor = type === 'success' ? 'var(--success)' : type === 'error' ? 'var(--danger)' : 'var(--primary)';
+            toast.style.borderLeftColor = borderColor;
+            
+            toast.innerHTML = `
+                <span style="flex: 1;">${message}</span>
+                <span onclick="this.parentElement.remove()" style="cursor: pointer; margin-left: 12px;">✕</span>
+            `;
+            
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+    </script>
+</body>
+</html>

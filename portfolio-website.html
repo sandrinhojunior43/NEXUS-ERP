@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ULTRON ERP - Commercial-Grade Manufacturing Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 48px; font-weight: 700; margin: 0 0 20px 0; }
+        .hero p { font-size: 20px; margin: 0 0 40px 0; opacity: 0.9; }
+        .btn-primary { background: #3b82f6; color: white; padding: 12px 32px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px; text-decoration: none; display: inline-block; transition: all 0.3s; }
+        .btn-primary:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn-secondary { background: white; color: #667eea; padding: 12px 32px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px; text-decoration: none; display: inline-block; margin-left: 16px; }
+        .btn-secondary:hover { background: #f3f4f6; }
+        .section { padding: 80px 20px; }
+        .section-dark { background: #1f2937; color: white; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+        .feature-card { background: white; border-radius: 12px; padding: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }
+        .section-dark .feature-card { background: #374151; }
+        .feature-icon { font-size: 48px; margin-bottom: 16px; }
+        .feature-card h3 { margin: 16px 0 8px 0; font-size: 20px; font-weight: 600; }
+        .feature-card p { color: #6b7280; margin: 0; }
+        .section-dark .feature-card p { color: #d1d5db; }
+        .stats { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .stat-item { text-align: center; padding: 20px; }
+        .stat-number { font-size: 36px; font-weight: 700; color: #667eea; }
+        .stat-label { color: #6b7280; font-size: 14px; margin-top: 8px; }
+        .pricing-card { border: 2px solid #e5e7eb; border-radius: 12px; padding: 40px; text-align: center; }
+        .pricing-card.featured { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; transform: scale(1.05); }
+        .pricing-card h3 { font-size: 24px; margin: 0 0 16px 0; }
+        .price { font-size: 48px; font-weight: 700; margin: 20px 0; }
+        .price-label { font-size: 14px; opacity: 0.8; }
+        .features-list { text-align: left; margin: 24px 0; font-size: 14px; line-height: 1.8; }
+        .features-list li { margin-bottom: 12px; }
+        .features-list li:before { content: "✓ "; color: #10b981; font-weight: bold; margin-right: 8px; }
+        .screenshot { border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-width: 100%; height: auto; }
+        .footer { background: #1f2937; color: white; padding: 40px 20px; text-align: center; }
+        .footer-links { margin: 20px 0; }
+        .footer-links a { color: white; text-decoration: none; margin: 0 20px; font-size: 14px; }
+        .footer-links a:hover { text-decoration: underline; }
+        .navbar { background: white; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .navbar-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .navbar-logo { font-size: 24px; font-weight: 700; color: #667eea; }
+        .navbar-links { display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; }
+        .navbar-links a { text-decoration: none; color: #1f2937; font-weight: 500; }
+        .navbar-links a:hover { color: #667eea; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 16px; }
+            .btn-secondary { margin-left: 0; margin-top: 16px; display: block; }
+            .navbar-links { gap: 16px; font-size: 12px; }
+            .grid { grid-template-columns: 1fr; }
+            .pricing-card.featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">⚡ ULTRON</div>
+            <ul class="navbar-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Preços</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="https://github.com/seu-usuario/ultron" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container">
+            <h1>ULTRON - Enterprise ERP<br>Para Manufatura Modular</h1>
+            <p>Sistema pronto para produção com autenticação enterprise,<br>RBAC, auditoria LGPD-compliant, e roadmap React/Node.js</p>
+            <a href="https://ultron-demo.vercel.app" class="btn-primary" target="_blank">Abrir Demo Agora</a>
+            <a href="https://github.com/seu-usuario/ultron" class="btn-secondary" target="_blank">Ver no GitHub</a>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 60px;">✨ Módulos Implementados</h2>
+            
+            <div class="grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Gestão de Estoque</h3>
+                    <p>SKU tracking, low-stock alerts, supplier management. 50+ itens de demo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏭</div>
+                    <h3>Produção</h3>
+                    <p>Ordens, agendamento, progresso em tempo real. 30+ ordens de demo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Qualidade</h3>
+                    <p>Inspeções, conformidade 98.5%, rastreamento de defeitos. 25+ inspeções.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Autenticação</h3>
+                    <p>JWT simulado, 3 roles (admin, gerente, operador), session management.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Auditoria</h3>
+                    <p>Log completo, LGPD-compliant, imutável, com timestamp de millisegundo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Analytics</h3>
+                    <p>8+ gráficos profissionais, trends, comparativos, radar performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📥</div>
+                    <h3>Import/Export</h3>
+                    <p>CSV e Excel import, export para PDF, relatórios formatados.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile-First</h3>
+                    <p>100% responsivo, hamburger menu, toque otimizado, dark mode.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="section section-dark">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 60px;">📈 Números</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px;">
+                <div class="stat-item">
+                    <div class="stat-number">575</div>
+                    <div class="stat-label">Máquinas em Estácio</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Módulos Implementados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Documentos Técnicos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Endpoints API</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH STACK SECTION -->
+    <section class="section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 60px;">🏗️ Arquitetura</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                <div>
+                    <h3 style="font-size: 24px; margin-bottom: 20px;">v4.1 - Production Ready</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 16px; line-height: 2;">
+                        <li>✅ HTML5 + CSS3 + Vanilla JS</li>
+                        <li>✅ Tailwind CSS (CDN)</li>
+                        <li>✅ Chart.js para gráficos</li>
+                        <li>✅ LocalStorage (simulated)</li>
+                        <li>✅ ~800 KB monolith</li>
+                        <li>✅ <500ms load time</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-size: 24px; margin-bottom: 20px;">v5.0 - Roadmap</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 16px; line-height: 2;">
+                        <li>🚀 React 18 + TypeScript</li>
+                        <li>🚀 Node.js + Express</li>
+                        <li>🚀 PostgreSQL 14+</li>
+                        <li>🚀 Prisma ORM</li>
+                        <li>🚀 JWT real + Refresh</li>
+                        <li>🚀 Docker ready</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCREENSHOTS SECTION -->
+    <section class="section section-dark">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 60px;">📸 Interface Preview</h2>
+            
+            <div style="background: white; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 30px;">
+                <p style="color: #6b7200; font-size: 14px; margin: 0;">Demo completa com dados reais:</p>
+                <p style="margin: 8px 0 0 0;">
+                    <strong style="color: #1f2937;">admin@ultron.com</strong> / <strong style="color: #1f2937;">admin123</strong>
+                </p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #dbeafe, #ede9fe); border-radius: 12px; padding: 40px; text-align: center;">
+                <p style="margin: 0; color: #1f2937; font-size: 16px;">🖥️ Dashboard com KPIs, Gráficos, e Analytics</p>
+                <p style="margin: 8px 0; color: #1f2937; font-size: 16px;">📦 Módulo Estoque com 50 itens e paginação</p>
+                <p style="margin: 8px 0; color: #1f2937; font-size: 16px;">🏭 Produção com 30 ordens e progresso visual</p>
+                <p style="margin: 8px 0; color: #1f2937; font-size: 16px;">✅ Qualidade com 25 inspeções e conformidade</p>
+                <p style="margin: 8px 0 0 0; color: #1f2937; font-size: 14px;">...e muito mais!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section class="section" id="pricing">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 60px;">💰 Preços (Proposta)</h2>
+            
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">R$ 2.000<span style="font-size: 16px;">/mês</span></div>
+                    <p class="price-label">Para pequenas equipes</p>
+                    <ul class="features-list">
+                        <li>Até 5 usuários</li>
+                        <li>3 módulos básicos</li>
+                        <li>Estoque + Produção + Qualidade</li>
+                        <li>Suporte por email</li>
+                        <li>SLA 95%</li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%; margin-top: 20px;">Solicitar Demo</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">R$ 5.000<span style="font-size: 16px;">/mês</span></div>
+                    <p class="price-label">Mais popular</p>
+                    <ul class="features-list">
+                        <li>Até 20 usuários</li>
+                        <li>Todos os módulos</li>
+                        <li>+ RH + Projetos + Assets</li>
+                        <li>Suporte 24/7</li>
+                        <li>SLA 99%</li>
+                        <li>API access</li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%; margin-top: 20px; background: white; color: #667eea;">Solicitar Demo</button>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom</div>
+                    <p class="price-label">Unlimited usuários</p>
+                    <ul class="features-list">
+                        <li>Unlimited users</li>
+                        <li>Dedicated infrastructure</li>
+                        <li>On-site suporte</li>
+                        <li>Custom integrations</li>
+                        <li>SLA 99.9%</li>
+                        <li>Priority roadmap</li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%; margin-top: 20px;">Contato Comercial</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="section section-dark" id="demo">
+        <div class="container" style="text-align: center;">
+            <h2 style="font-size: 36px; margin-bottom: 30px;">🚀 Pronto para Começar?</h2>
+            <p style="font-size: 18px; margin-bottom: 40px; opacity: 0.9;">Teste ULTRON agora. Sem cartão de crédito, sem instalação.</p>
+            
+            <a href="https://ultron-demo.vercel.app" class="btn-primary" target="_blank" style="font-size: 18px; padding: 16px 48px;">Abrir Demo Completa →</a>
+        </div>
+    </section>
+
+    <!-- DOCUMENTATION SECTION -->
+    <section class="section">
+        <div class="container">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 60px;">📚 Documentação</h2>
+            
+            <div class="grid">
+                <div class="feature-card">
+                    <h3>Architecture</h3>
+                    <p>Design patterns, layers, roadmap v4.0→v6.0</p>
+                    <a href="https://github.com/seu-usuario/ultron/blob/main/docs/ARCHITECTURE.md" style="color: #667eea; text-decoration: none; font-weight: 600;">Ler →</a>
+                </div>
+                <div class="feature-card">
+                    <h3>API Specification</h3>
+                    <p>25+ endpoints, request/response, examples</p>
+                    <a href="https://github.com/seu-usuario/ultron/blob/main/docs/API.md" style="color: #667eea; text-decoration: none; font-weight: 600;">Ler →</a>
+                </div>
+                <div class="feature-card">
+                    <h3>Database Schema</h3>
+                    <p>PostgreSQL schema, validation, indexes</p>
+                    <a href="https://github.com/seu-usuario/ultron/blob/main/docs/SCHEMA.json" style="color: #667eea; text-decoration: none; font-weight: 600;">Ler →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div style="margin-bottom: 20px;">
+                <span style="font-size: 24px; font-weight: 700;">⚡ ULTRON</span>
+                <p style="margin: 8px 0;">Enterprise ERP for Manufacturing</p>
+            </div>
+            
+            <div class="footer-links">
+                <a href="https://ultron-demo.vercel.app" target="_blank">Demo</a>
+                <a href="https://github.com/seu-usuario/ultron" target="_blank">GitHub</a>
+                <a href="https://github.com/seu-usuario/ultron#-documentation" target="_blank">Docs</a>
+                <a href="mailto:sandro@ultron.com">Contato</a>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">
+                © 2024 Sandro Aparecido. MIT License.<br>
+                Desenvolvido como Thesis - Estácio Mogi Guaçu
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
