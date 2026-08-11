@@ -1,5 +1,12 @@
 # 📑 **NEXUS - Project Index & File Guide**
 
+> ⚠️ **Documento histórico** (julho de 2024) — descreve
+> `nexus-v4-2-enterprise-2000s.html`, uma versão anterior ao protótipo atual
+> (`index-2.html`) e à migração para backend real. Para o estado atual,
+> veja [`README.md`](README.md), [`NEXUS_ARCHITECTURE.md`](NEXUS_ARCHITECTURE.md)
+> e [`NEXUS_ROADMAP.md`](NEXUS_ROADMAP.md). Mantido aqui sem edições como
+> registro histórico.
+
 **Última atualização:** 24 de julho de 2024  
 **Versão:** 4.2 Enterprise 2000s  
 **Status:** ✅ v4.2 Concluído | ⏳ Próximo: v4.3 & FASE D

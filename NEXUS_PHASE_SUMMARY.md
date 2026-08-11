@@ -1,5 +1,12 @@
 # 📊 **NEXUS - Resumo Executivo por Fases**
 
+> ⚠️ **Documento histórico.** Registra o planejamento comercial do projeto
+> em julho de 2024, quando o sistema ainda era só o protótipo client-only.
+> A "FASE B: Full Stack v5.0" mencionada abaixo já começou — ver
+> [`NEXUS_ARCHITECTURE.md`](NEXUS_ARCHITECTURE.md) e
+> [`NEXUS_ROADMAP.md`](NEXUS_ROADMAP.md) para o estado atual real do app em
+> `web/` + `supabase/`. Mantido aqui sem edições como registro histórico.
+
 ---
 
 ## 🎯 **Overview das 4 Fases**
