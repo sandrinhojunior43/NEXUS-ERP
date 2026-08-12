@@ -31,7 +31,7 @@ export const MODULES: ModuleGroup[] = [
       { id: 'moves', code: 'MOV', label: 'Movimentações', path: '/movimentacoes', ready: true },
       { id: 'boms', code: 'FICHA', label: 'Ficha técnica', path: '/fichas-tecnicas', ready: true },
       { id: 'production', code: 'PROD', label: 'Produção', path: '/producao', ready: true },
-      { id: 'quality', code: 'QUAL', label: 'Qualidade', path: '/qualidade', ready: false },
+      { id: 'quality', code: 'QUAL', label: 'Qualidade', path: '/qualidade', ready: true },
     ],
   },
   {
@@ -45,8 +45,8 @@ export const MODULES: ModuleGroup[] = [
   {
     group: 'Pessoas',
     items: [
-      { id: 'departments', code: 'DEPT', label: 'Departamentos', path: '/departamentos', ready: false },
-      { id: 'employees', code: 'RH', label: 'Funcionários', path: '/funcionarios', ready: false },
+      { id: 'departments', code: 'DEPT', label: 'Departamentos', path: '/departamentos', ready: true },
+      { id: 'employees', code: 'RH', label: 'Funcionários', path: '/funcionarios', ready: true },
     ],
   },
   {

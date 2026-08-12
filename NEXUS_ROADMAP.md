@@ -23,30 +23,31 @@ schema — a base de dados já existe para tudo.
 
 Ordenado por dependência e valor — cada item assume os anteriores prontos.
 
+✅ **Qualidade** (`quality_inspections`) e **Departamentos + Funcionários**
+(`departments`, `employees`) já foram portados — inspeção vinculada a ordens
+de produção concluídas com taxa de conformidade, e CRUD de RH completo.
+
 1. **Requisições de compra + Cotações** (`requisitions`, `requisition_lines`,
    `requisition_approvals`, `quotations`, `quotation_lines`) — fluxo de
    aprovação por alçada (`profiles.limite_alcada` / `nivel_aprovacao` já
-   existem no schema), depois conversão em pedido de compra.
-2. **Qualidade** (`quality_inspections`) — inspeção vinculada a ordens de
-   produção concluídas, taxa de conformidade.
-3. **Departamentos + Funcionários** (`departments`, `employees`) — CRUD
-   simples, pré-requisito para RH e para o solicitante de requisições.
-4. **Expedição** (`expedicoes`, `expedicao_lines`) — separação → embarque →
+   existem no schema, e `employees`/`departments` já estão prontos para
+   servir de solicitante), depois conversão em pedido de compra.
+2. **Expedição** (`expedicoes`, `expedicao_lines`) — separação → embarque →
    entrega, a partir de vendas faturadas.
-5. **Devoluções** (`devolucoes`, `devolucao_lines`) — vinculadas a
+3. **Devoluções** (`devolucoes`, `devolucao_lines`) — vinculadas a
    compra/venda, com estorno de estoque.
-6. **Documentos fiscais** (`invoices`, `invoice_lines`) — hoje é só registro
+4. **Documentos fiscais** (`invoices`, `invoice_lines`) — hoje é só registro
    interno (sem SEFAZ); calcular ICMS/IPI/PIS/COFINS a partir da venda
    faturada, como o protótipo legado já faz em `renderLinesRC`/`gerarNFe`.
-7. **Contabilidade** (`chart_of_accounts`, `journal_entries`,
+5. **Contabilidade** (`chart_of_accounts`, `journal_entries`,
    `journal_lines`) — partida dobrada automática a partir de
    compras/vendas/produção (o protótipo legado tem a lógica de referência
    em `renderDRE`/`renderBalanco`/`renderBalancete`), depois telas de
    Razão/Balancete/DRE/Balanço.
-8. **Folha de pagamento** (`payroll`) — depende de Funcionários.
-9. **Auditoria** (`audit_log`) — a tabela já existe; falta instrumentar as
+6. **Folha de pagamento** (`payroll`) — depende de Funcionários (já pronto).
+7. **Auditoria** (`audit_log`) — a tabela já existe; falta instrumentar as
    mutações principais (hoje nenhuma tela grava nela) e a tela de consulta.
-10. **Gestão de usuários (UI)** — hoje a promoção de papel
+8. **Gestão de usuários (UI)** — hoje a promoção de papel
     (`profiles.role`) é feita manualmente no banco; falta tela para
     administradores convidarem/desativarem usuários e mudarem papéis.
 

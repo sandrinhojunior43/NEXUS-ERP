@@ -68,9 +68,9 @@ papel diretamente no banco. Ver [`NEXUS_ARCHITECTURE.md`](NEXUS_ARCHITECTURE.md)
 | Fornecedores + Compras | ✅ |
 | Clientes + CRM (funil) + Vendas | ✅ |
 | Financeiro (a pagar/receber) | ✅ |
-| Qualidade | 🚧 |
+| Qualidade | ✅ |
+| Departamentos + Funcionários (RH) | ✅ |
 | Requisições de compra + cotações | 🚧 |
-| Departamentos + Funcionários (RH) | 🚧 |
 | Expedição | 🚧 |
 | Devoluções | 🚧 |
 | Documentos fiscais (NF-e) | 🚧 |

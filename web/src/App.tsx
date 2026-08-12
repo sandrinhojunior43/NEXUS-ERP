@@ -17,6 +17,9 @@ import { CrmPage } from './pages/crm/CrmPage';
 import { SalesPage } from './pages/sales/SalesPage';
 import { FinancialPage } from './pages/financial/FinancialPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
+import { DepartmentsPage } from './pages/departments/DepartmentsPage';
+import { EmployeesPage } from './pages/employees/EmployeesPage';
+import { QualityPage } from './pages/quality/QualityPage';
 import { ComingSoon } from './components/ComingSoon';
 
 const queryClient = new QueryClient({
@@ -39,12 +42,12 @@ export default function App() {
                 <Route path="/movimentacoes" element={<MovesPage />} />
                 <Route path="/fichas-tecnicas" element={<ProductionPage />} />
                 <Route path="/producao" element={<ProductionPage />} />
-                <Route path="/qualidade" element={<ComingSoon label="Qualidade" />} />
+                <Route path="/qualidade" element={<QualityPage />} />
                 <Route path="/fornecedores" element={<SuppliersPage />} />
                 <Route path="/requisicoes" element={<ComingSoon label="Requisições" />} />
                 <Route path="/compras" element={<PurchasesPage />} />
-                <Route path="/departamentos" element={<ComingSoon label="Departamentos" />} />
-                <Route path="/funcionarios" element={<ComingSoon label="Funcionários" />} />
+                <Route path="/departamentos" element={<DepartmentsPage />} />
+                <Route path="/funcionarios" element={<EmployeesPage />} />
                 <Route path="/crm" element={<CrmPage />} />
                 <Route path="/clientes" element={<CustomersPage />} />
                 <Route path="/vendas" element={<SalesPage />} />
