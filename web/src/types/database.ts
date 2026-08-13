@@ -278,6 +278,17 @@ export interface RequisitionLineRow {
   unit_price: number;
 }
 
+export interface RequisitionApprovalRow {
+  id: string;
+  requisition_id: string;
+  user_name: string;
+  acao: 'aprovou' | 'reprovou';
+  nivel: number;
+  nivel_label: string | null;
+  motivo: string;
+  at: string;
+}
+
 export interface QuotationRow {
   id: string;
   code: string;
@@ -288,6 +299,14 @@ export interface QuotationRow {
   pagamento: string;
   escolhida: boolean;
   created_at: string;
+}
+
+export interface QuotationLineRow {
+  id: string;
+  quotation_id: string;
+  item_id: string;
+  quantity: number;
+  unit_price: number;
 }
 
 export type PurchaseStatus = 'rascunho' | 'enviado' | 'parcial' | 'recebido' | 'cancelado';
@@ -519,7 +538,9 @@ export interface TableRowMap {
   quality_inspections: QualityInspectionRow;
   requisitions: RequisitionRow;
   requisition_lines: RequisitionLineRow;
+  requisition_approvals: RequisitionApprovalRow;
   quotations: QuotationRow;
+  quotation_lines: QuotationLineRow;
   purchases: PurchaseRow;
   purchase_lines: PurchaseLineRow;
   receipts: ReceiptRow;

@@ -84,7 +84,7 @@ papel diretamente no banco. Ver [`NEXUS_ARCHITECTURE.md`](NEXUS_ARCHITECTURE.md)
 | Financeiro (a pagar/receber) | ✅ |
 | Qualidade | ✅ |
 | Departamentos + Funcionários (RH) | ✅ |
-| Requisições de compra + cotações | 🚧 |
+| Requisições de compra + cotações | ✅ |
 | Expedição | 🚧 |
 | Devoluções | 🚧 |
 | Documentos fiscais (NF-e) | 🚧 |

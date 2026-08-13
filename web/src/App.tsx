@@ -20,6 +20,7 @@ import { SettingsPage } from './pages/settings/SettingsPage';
 import { DepartmentsPage } from './pages/departments/DepartmentsPage';
 import { EmployeesPage } from './pages/employees/EmployeesPage';
 import { QualityPage } from './pages/quality/QualityPage';
+import { RequisitionsPage } from './pages/requisitions/RequisitionsPage';
 import { ComingSoon } from './components/ComingSoon';
 
 const queryClient = new QueryClient({
@@ -44,7 +45,7 @@ export default function App() {
                 <Route path="/producao" element={<ProductionPage />} />
                 <Route path="/qualidade" element={<QualityPage />} />
                 <Route path="/fornecedores" element={<SuppliersPage />} />
-                <Route path="/requisicoes" element={<ComingSoon label="Requisições" />} />
+                <Route path="/requisicoes" element={<RequisitionsPage />} />
                 <Route path="/compras" element={<PurchasesPage />} />
                 <Route path="/departamentos" element={<DepartmentsPage />} />
                 <Route path="/funcionarios" element={<EmployeesPage />} />

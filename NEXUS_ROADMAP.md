@@ -23,33 +23,40 @@ schema — a base de dados já existe para tudo.
 
 Ordenado por dependência e valor — cada item assume os anteriores prontos.
 
-✅ **Qualidade** (`quality_inspections`) e **Departamentos + Funcionários**
-(`departments`, `employees`) já foram portados — inspeção vinculada a ordens
-de produção concluídas com taxa de conformidade, e CRUD de RH completo.
+✅ **Qualidade** (`quality_inspections`), **Departamentos + Funcionários**
+(`departments`, `employees`) e **Requisições de compra + Cotações**
+(`requisitions`, `requisition_lines`, `requisition_approvals`, `quotations`,
+`quotation_lines`) já foram portados — fluxo completo rascunho → aguardando
+→ aprovada/reprovada → cotações por fornecedor → conversão em pedido de
+compra, testado de ponta a ponta contra o Supabase real.
 
-1. **Requisições de compra + Cotações** (`requisitions`, `requisition_lines`,
-   `requisition_approvals`, `quotations`, `quotation_lines`) — fluxo de
-   aprovação por alçada (`profiles.limite_alcada` / `nivel_aprovacao` já
-   existem no schema, e `employees`/`departments` já estão prontos para
-   servir de solicitante), depois conversão em pedido de compra.
-2. **Expedição** (`expedicoes`, `expedicao_lines`) — separação → embarque →
+1. **Expedição** (`expedicoes`, `expedicao_lines`) — separação → embarque →
    entrega, a partir de vendas faturadas.
-3. **Devoluções** (`devolucoes`, `devolucao_lines`) — vinculadas a
+2. **Devoluções** (`devolucoes`, `devolucao_lines`) — vinculadas a
    compra/venda, com estorno de estoque.
-4. **Documentos fiscais** (`invoices`, `invoice_lines`) — hoje é só registro
+3. **Documentos fiscais** (`invoices`, `invoice_lines`) — hoje é só registro
    interno (sem SEFAZ); calcular ICMS/IPI/PIS/COFINS a partir da venda
    faturada, como o protótipo legado já faz em `renderLinesRC`/`gerarNFe`.
-5. **Contabilidade** (`chart_of_accounts`, `journal_entries`,
+4. **Contabilidade** (`chart_of_accounts`, `journal_entries`,
    `journal_lines`) — partida dobrada automática a partir de
    compras/vendas/produção (o protótipo legado tem a lógica de referência
    em `renderDRE`/`renderBalanco`/`renderBalancete`), depois telas de
    Razão/Balancete/DRE/Balanço.
-6. **Folha de pagamento** (`payroll`) — depende de Funcionários (já pronto).
-7. **Auditoria** (`audit_log`) — a tabela já existe; falta instrumentar as
+5. **Folha de pagamento** (`payroll`) — depende de Funcionários (já pronto).
+6. **Auditoria** (`audit_log`) — a tabela já existe; falta instrumentar as
    mutações principais (hoje nenhuma tela grava nela) e a tela de consulta.
-8. **Gestão de usuários (UI)** — hoje a promoção de papel
+7. **Gestão de usuários (UI)** — hoje a promoção de papel
     (`profiles.role`) é feita manualmente no banco; falta tela para
     administradores convidarem/desativarem usuários e mudarem papéis.
+
+## Aprovação de requisições — simplificação atual
+
+O schema suporta alçada multi-nível (`requisition_approvals.nivel`,
+`profiles.nivel_aprovacao`/`limite_alcada`), mas a tela hoje trata aprovação
+como um único passo (`gerente`+ aprova ou reprova, sem verificar alçada por
+valor). Refinar isso para múltiplos níveis por valor da requisição é uma
+melhoria futura, não um bloqueio — o protótipo legado tem a lógica de
+referência (`exig = tot<=20000 ? 1 : tot<=100000 ? 2 : 3`) em `seedData()`.
 
 ## Dívidas técnicas conhecidas
 

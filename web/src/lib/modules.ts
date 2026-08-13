@@ -38,7 +38,7 @@ export const MODULES: ModuleGroup[] = [
     group: 'Suprimentos',
     items: [
       { id: 'suppliers', code: 'FORN', label: 'Fornecedores', path: '/fornecedores', ready: true },
-      { id: 'requisitions', code: 'REQ', label: 'Requisições', path: '/requisicoes', ready: false },
+      { id: 'requisitions', code: 'REQ', label: 'Requisições', path: '/requisicoes', ready: true },
       { id: 'purchases', code: 'COMP', label: 'Compras', path: '/compras', ready: true },
     ],
   },
