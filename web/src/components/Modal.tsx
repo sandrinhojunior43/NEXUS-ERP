@@ -14,7 +14,7 @@ export function Modal({
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4 pt-12" onClick={onClose}>
       <div
-        className={`w-full ${wide ? 'max-w-2xl' : 'max-w-md'} rounded-xl border border-[var(--nx-border)] bg-[var(--nx-surface)] p-5 shadow-xl`}
+        className={`nx-card w-full ${wide ? 'max-w-2xl' : 'max-w-md'} rounded-xl border border-[var(--nx-border)] bg-[var(--nx-surface)] p-5 shadow-xl`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">

@@ -121,7 +121,7 @@ export function InventoryPage() {
             e.stopPropagation();
             if (confirm(`Remover item ${r.sku}? Isso também remove saldos e lotes associados.`)) remove.mutate(r.id);
           }}
-          className="text-xs text-rose-600 hover:underline"
+          className="nx-link text-xs text-rose-600 hover:underline"
         >
           Remover
         </button>
@@ -137,7 +137,7 @@ export function InventoryPage() {
           <p className="text-sm text-[var(--nx-text-muted)]">{data?.length ?? 0} itens cadastrados</p>
         </div>
         {canWrite && (
-          <button onClick={openNew} className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+          <button onClick={openNew} className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
             + Novo item
           </button>
         )}
@@ -148,7 +148,7 @@ export function InventoryPage() {
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`rounded-full border px-3 py-1 ${
+            className={`nx-pill rounded-full border px-3 py-1 ${
               filter === f ? 'border-[var(--nx-accent)] bg-[var(--nx-accent)] text-[var(--nx-accent-fg)]' : 'border-[var(--nx-border)]'
             }`}
           >
@@ -242,10 +242,10 @@ export function InventoryPage() {
               Controla lote/rastreabilidade
             </label>
             <div className="flex justify-end gap-2">
-              <button type="button" onClick={() => setOpen(false)} className="rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
+              <button type="button" onClick={() => setOpen(false)} className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
                 Cancelar
               </button>
-              <button type="submit" className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+              <button type="submit" className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
                 Salvar
               </button>
             </div>

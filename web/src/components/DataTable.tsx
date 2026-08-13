@@ -18,7 +18,7 @@ interface DataTableProps<T> {
 
 export function DataTable<T>({ columns, rows, rowKey, loading, emptyMessage, onRowClick }: DataTableProps<T>) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-[var(--nx-border)]">
+    <div className="nx-card overflow-x-auto rounded-lg border border-[var(--nx-border)]">
       <table className="w-full min-w-max text-sm">
         <thead>
           <tr className="border-b border-[var(--nx-border)] bg-black/[0.02] dark:bg-white/[0.03]">

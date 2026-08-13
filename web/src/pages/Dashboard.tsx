@@ -63,7 +63,7 @@ export function Dashboard() {
         <Kpi label="Títulos vencidos" value={num(vencidos)} tone={vencidos > 0 ? 'danger' : 'default'} />
       </div>
 
-      <div className="rounded-xl border border-[var(--nx-border)] bg-[var(--nx-surface)] p-4">
+      <div className="nx-card rounded-xl border border-[var(--nx-border)] bg-[var(--nx-surface)] p-4">
         <h2 className="mb-3 text-sm font-semibold text-[var(--nx-text-muted)]">Estoque por categoria</h2>
         {isLoading ? (
           <div className="py-10 text-center text-sm text-[var(--nx-text-muted)]">Carregando…</div>

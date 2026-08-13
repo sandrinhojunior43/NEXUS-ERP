@@ -64,7 +64,7 @@ export function FinancialPage() {
       header: '',
       render: (r) =>
         !r.paid_at ? (
-          <button onClick={(e) => { e.stopPropagation(); baixar(r); }} className="text-xs text-[var(--nx-accent)] hover:underline">
+          <button onClick={(e) => { e.stopPropagation(); baixar(r); }} className="nx-link text-xs text-[var(--nx-accent)] hover:underline">
             Baixar
           </button>
         ) : null,
@@ -82,7 +82,7 @@ export function FinancialPage() {
           </p>
         </div>
         {canWrite && (
-          <button onClick={() => setOpen(true)} className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+          <button onClick={() => setOpen(true)} className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
             + Novo lançamento
           </button>
         )}
@@ -93,7 +93,7 @@ export function FinancialPage() {
           <button
             key={f}
             onClick={() => setFilter(f)}
-            className={`rounded-full border px-3 py-1 ${filter === f ? 'border-[var(--nx-accent)] bg-[var(--nx-accent)] text-[var(--nx-accent-fg)]' : 'border-[var(--nx-border)]'}`}
+            className={`nx-pill rounded-full border px-3 py-1 ${filter === f ? 'border-[var(--nx-accent)] bg-[var(--nx-accent)] text-[var(--nx-accent-fg)]' : 'border-[var(--nx-border)]'}`}
           >
             {f === 'todos' ? 'Todos' : f === 'pagar' ? 'A pagar' : f === 'receber' ? 'A receber' : 'Vencidos'}
           </button>
@@ -123,10 +123,10 @@ export function FinancialPage() {
               </Field>
             </div>
             <div className="flex justify-end gap-2">
-              <button type="button" onClick={() => setOpen(false)} className="rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
+              <button type="button" onClick={() => setOpen(false)} className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
                 Cancelar
               </button>
-              <button type="submit" className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+              <button type="submit" className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
                 Salvar
               </button>
             </div>

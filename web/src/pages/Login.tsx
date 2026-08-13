@@ -1,13 +1,18 @@
 import { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
 import { supabaseConfigured } from '../lib/supabase';
 
 export function Login() {
-  const { signIn } = useAuth();
+  const { session, signIn } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Já autenticado (login recém-concluído, ou sessão restaurada ao abrir
+  // /login diretamente) — não faz sentido mostrar o formulário de novo.
+  if (session) return <Navigate to="/" replace />;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -19,8 +24,8 @@ export function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--nx-bg)] p-4">
-      <div className="w-full max-w-sm rounded-xl border border-[var(--nx-border)] bg-[var(--nx-surface)] p-6 shadow-sm">
+    <div className="nx-auth-bg flex min-h-screen items-center justify-center bg-[var(--nx-bg)] p-4">
+      <div className="nx-card w-full max-w-sm rounded-xl border border-[var(--nx-border)] bg-[var(--nx-surface)] p-6 shadow-sm">
         <div className="mb-6 flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--nx-accent)] font-bold text-[var(--nx-accent-fg)]">N</div>
           <div>
@@ -70,7 +75,7 @@ export function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-md bg-[var(--nx-accent)] px-3 py-2 text-sm font-medium text-[var(--nx-accent-fg)] disabled:opacity-60"
+            className="nx-btn nx-btn-primary w-full rounded-md bg-[var(--nx-accent)] px-3 py-2 text-sm font-medium text-[var(--nx-accent-fg)] disabled:opacity-60"
           >
             {loading ? 'Entrando…' : 'Entrar'}
           </button>

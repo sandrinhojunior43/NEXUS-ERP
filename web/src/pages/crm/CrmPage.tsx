@@ -64,7 +64,7 @@ export function CrmPage() {
           <p className="text-sm text-[var(--nx-text-muted)]">{opps?.length ?? 0} oportunidades</p>
         </div>
         {canWrite && (
-          <button onClick={() => setOpen(true)} className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+          <button onClick={() => setOpen(true)} className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
             + Nova oportunidade
           </button>
         )}
@@ -154,10 +154,10 @@ export function CrmPage() {
               </Field>
             </div>
             <div className="flex justify-end gap-2">
-              <button type="button" onClick={() => setOpen(false)} className="rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
+              <button type="button" onClick={() => setOpen(false)} className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
                 Cancelar
               </button>
-              <button type="submit" className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+              <button type="submit" className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
                 Salvar
               </button>
             </div>

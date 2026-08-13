@@ -3,13 +3,21 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
 import { ALL_MODULES, CODE_MAP, MODULES, roleAtLeast } from '../lib/modules';
 import { toggleTheme, isDark } from '../lib/theme';
+import { getDesign, setDesign } from '../lib/design';
 
 export function Layout() {
   const { profile, signOut } = useAuth();
   const navigate = useNavigate();
   const [cmd, setCmd] = useState('');
   const [dark, setDark] = useState(isDark());
+  const [design, setDesignState] = useState(getDesign());
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  function toggleDesign() {
+    const next = design === 'modern' ? 'classic' : 'modern';
+    setDesign(next);
+    setDesignState(next);
+  }
 
   const visibleGroups = useMemo(
     () =>
@@ -39,7 +47,7 @@ export function Layout() {
   return (
     <div className="flex min-h-screen bg-[var(--nx-bg)] text-[var(--nx-text)]">
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-60 shrink-0 overflow-y-auto border-r border-[var(--nx-border)] bg-[var(--nx-surface)] p-3 transition-transform lg:static lg:translate-x-0 ${
+        className={`nx-glass fixed inset-y-0 left-0 z-40 w-60 shrink-0 overflow-y-auto border-r border-[var(--nx-border)] bg-[var(--nx-surface)] p-3 transition-transform lg:static lg:translate-x-0 ${
           mobileNavOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -62,7 +70,7 @@ export function Layout() {
                     end={m.path === '/'}
                     onClick={() => setMobileNavOpen(false)}
                     className={({ isActive }) =>
-                      `flex items-center justify-between rounded-md px-2 py-1.5 text-sm ${
+                      `nx-nav-item flex items-center justify-between rounded-md px-2 py-1.5 text-sm ${
                         isActive
                           ? 'bg-[var(--nx-accent)] text-[var(--nx-accent-fg)]'
                           : 'text-[var(--nx-text)] hover:bg-black/5 dark:hover:bg-white/10'
@@ -84,7 +92,7 @@ export function Layout() {
       )}
 
       <div className="flex min-h-screen flex-1 flex-col">
-        <header className="sticky top-0 z-20 flex items-center gap-3 border-b border-[var(--nx-border)] bg-[var(--nx-surface)] px-4 py-2">
+        <header className="nx-glass sticky top-0 z-20 flex items-center gap-3 border-b border-[var(--nx-border)] bg-[var(--nx-surface)] px-4 py-2">
           <button className="rounded p-1.5 hover:bg-black/5 dark:hover:bg-white/10 lg:hidden" onClick={() => setMobileNavOpen(true)} aria-label="Abrir menu">
             ☰
           </button>
@@ -98,8 +106,16 @@ export function Layout() {
           </form>
           <div className="flex-1" />
           <button
+            onClick={toggleDesign}
+            className="nx-btn nx-btn-secondary hidden rounded-md border border-[var(--nx-border)] px-2 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 sm:inline-flex"
+            aria-label="Alternar estilo visual"
+            title={design === 'modern' ? 'Estilo: Moderno (macOS) — clique para Clássico' : 'Estilo: Clássico — clique para Moderno (macOS)'}
+          >
+            {design === 'modern' ? '🖥️' : '◧'}
+          </button>
+          <button
             onClick={() => setDark(toggleTheme())}
-            className="rounded-md border border-[var(--nx-border)] px-2 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10"
+            className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-2 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10"
             aria-label="Alternar tema"
           >
             {dark ? '☀️' : '🌙'}
@@ -110,7 +126,7 @@ export function Layout() {
           </div>
           <button
             onClick={() => signOut()}
-            className="rounded-md border border-[var(--nx-border)] px-2 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10"
+            className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-2 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10"
           >
             Sair
           </button>

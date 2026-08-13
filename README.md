@@ -42,6 +42,20 @@ Credenciais de demonstração (após seguir o setup em `supabase/README.md`):
 
 > Protótipo de demonstração com dados fictícios. Não use credenciais reais.
 
+### Estilo visual
+
+O app tem dois estilos de interface, alternáveis a qualquer momento em
+**Configurações** (ou pelo ícone 🖥️/◧ na barra superior) — a preferência fica
+salva no navegador:
+
+- **Moderno** (padrão) — inspirado em macOS/iOS: vidro translúcido na
+  barra lateral/superior, cantos arredondados, botões em pílula, tipografia
+  do sistema Apple (`-apple-system`).
+- **Clássico** — o visual corporativo original do NEXUS (bordas retas, azul
+  corporativo), mais próximo da estética 2000s do protótipo legado.
+
+Ambos têm modo claro/escuro independente disso.
+
 ### Stack
 
 | Camada | Tecnologia |

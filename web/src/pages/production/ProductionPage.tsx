@@ -136,7 +136,7 @@ export function ProductionPage() {
       render: (r) => (
         <div className="flex gap-2">
           {r.status === 'planejada' && (
-            <button onClick={(e) => { e.stopPropagation(); iniciar(r); }} className="text-xs text-[var(--nx-accent)] hover:underline">
+            <button onClick={(e) => { e.stopPropagation(); iniciar(r); }} className="nx-link text-xs text-[var(--nx-accent)] hover:underline">
               Iniciar
             </button>
           )}
@@ -182,22 +182,22 @@ export function ProductionPage() {
           <p className="text-sm text-[var(--nx-text-muted)]">Ordens de produção e fichas técnicas (BOM)</p>
         </div>
         {canWrite && tab === 'ordens' && (
-          <button onClick={() => setOpenOrder(true)} className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+          <button onClick={() => setOpenOrder(true)} className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
             + Nova ordem
           </button>
         )}
         {canWrite && tab === 'fichas' && (
-          <button onClick={() => setOpenBom(true)} className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+          <button onClick={() => setOpenBom(true)} className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
             + Nova ficha técnica
           </button>
         )}
       </div>
 
       <div className="flex gap-2 text-sm">
-        <button onClick={() => setTab('ordens')} className={`rounded-full border px-3 py-1 ${tab === 'ordens' ? 'border-[var(--nx-accent)] bg-[var(--nx-accent)] text-[var(--nx-accent-fg)]' : 'border-[var(--nx-border)]'}`}>
+        <button onClick={() => setTab('ordens')} className={`nx-pill rounded-full border px-3 py-1 ${tab === 'ordens' ? 'border-[var(--nx-accent)] bg-[var(--nx-accent)] text-[var(--nx-accent-fg)]' : 'border-[var(--nx-border)]'}`}>
           Ordens
         </button>
-        <button onClick={() => setTab('fichas')} className={`rounded-full border px-3 py-1 ${tab === 'fichas' ? 'border-[var(--nx-accent)] bg-[var(--nx-accent)] text-[var(--nx-accent-fg)]' : 'border-[var(--nx-border)]'}`}>
+        <button onClick={() => setTab('fichas')} className={`nx-pill rounded-full border px-3 py-1 ${tab === 'fichas' ? 'border-[var(--nx-accent)] bg-[var(--nx-accent)] text-[var(--nx-accent-fg)]' : 'border-[var(--nx-border)]'}`}>
           Fichas técnicas
         </button>
       </div>
@@ -211,7 +211,7 @@ export function ProductionPage() {
             const ls = linesByBom.get(b.id) ?? [];
             const custo = ls.reduce((a, l) => a + (itemById.get(l.item_id)?.unit_price ?? 0) * l.quantity * (1 + l.perda_pct / 100), 0);
             return (
-              <div key={b.id} className="rounded-xl border border-[var(--nx-border)] bg-[var(--nx-surface)] p-4">
+              <div key={b.id} className="nx-card rounded-xl border border-[var(--nx-border)] bg-[var(--nx-surface)] p-4">
                 <h3 className="text-sm font-semibold">{prod?.description ?? '—'}</h3>
                 <p className="text-xs text-[var(--nx-text-muted)]">v{b.versao} · {ls.length} componentes</p>
                 <ul className="mt-2 space-y-1 text-xs">
@@ -255,10 +255,10 @@ export function ProductionPage() {
             </Field>
             {error && <p className="mb-3 text-xs text-rose-600 dark:text-rose-400">{error}</p>}
             <div className="flex justify-end gap-2">
-              <button type="button" onClick={() => setOpenOrder(false)} className="rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
+              <button type="button" onClick={() => setOpenOrder(false)} className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
                 Cancelar
               </button>
-              <button type="submit" className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+              <button type="submit" className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
                 Criar ordem
               </button>
             </div>
@@ -336,7 +336,7 @@ export function ProductionPage() {
               <button
                 type="button"
                 onClick={() => setBomFormLines([...bomFormLines, { item_id: '', quantity: 0, perda_pct: 2 }])}
-                className="text-xs text-[var(--nx-accent)] hover:underline"
+                className="nx-link text-xs text-[var(--nx-accent)] hover:underline"
               >
                 + adicionar componente
               </button>
@@ -344,10 +344,10 @@ export function ProductionPage() {
             {error && <p className="mb-3 text-xs text-rose-600 dark:text-rose-400">{error}</p>}
             <p className="mb-3 text-xs text-[var(--nx-text-muted)]">Criar uma nova ficha para um produto que já tem uma ativa substitui a anterior (nova versão).</p>
             <div className="flex justify-end gap-2">
-              <button type="button" onClick={() => setOpenBom(false)} className="rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
+              <button type="button" onClick={() => setOpenBom(false)} className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
                 Cancelar
               </button>
-              <button type="submit" className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+              <button type="submit" className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
                 Salvar ficha
               </button>
             </div>

@@ -138,7 +138,7 @@ export function PurchasesPage() {
               e.stopPropagation();
               receber(r);
             }}
-            className="text-xs text-[var(--nx-accent)] hover:underline"
+            className="nx-link text-xs text-[var(--nx-accent)] hover:underline"
           >
             Receber
           </button>
@@ -159,7 +159,7 @@ export function PurchasesPage() {
               resetForm();
               setOpen(true);
             }}
-            className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]"
+            className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]"
           >
             + Novo pedido
           </button>
@@ -243,7 +243,7 @@ export function PurchasesPage() {
               <button
                 type="button"
                 onClick={() => setFormLines([...formLines, { item_id: '', quantity: 0, unit_price: 0 }])}
-                className="text-xs text-[var(--nx-accent)] hover:underline"
+                className="nx-link text-xs text-[var(--nx-accent)] hover:underline"
               >
                 + adicionar item
               </button>
@@ -255,10 +255,10 @@ export function PurchasesPage() {
 
             {error && <p className="mb-3 text-xs text-rose-600 dark:text-rose-400">{error}</p>}
             <div className="flex justify-end gap-2">
-              <button type="button" onClick={() => setOpen(false)} className="rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
+              <button type="button" onClick={() => setOpen(false)} className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
                 Cancelar
               </button>
-              <button disabled={saving} type="submit" className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)] disabled:opacity-60">
+              <button disabled={saving} type="submit" className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)] disabled:opacity-60">
                 {saving ? 'Salvando…' : 'Criar pedido'}
               </button>
             </div>

@@ -61,7 +61,7 @@ export function DepartmentsPage() {
             e.stopPropagation();
             if (confirm(`Remover departamento ${r.name}?`)) remove.mutate(r.id);
           }}
-          className="text-xs text-rose-600 hover:underline"
+          className="nx-link text-xs text-rose-600 hover:underline"
         >
           Remover
         </button>
@@ -77,7 +77,7 @@ export function DepartmentsPage() {
           <p className="text-sm text-[var(--nx-text-muted)]">{data?.length ?? 0} cadastrados</p>
         </div>
         {canWrite && (
-          <button onClick={openNew} className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+          <button onClick={openNew} className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
             + Novo departamento
           </button>
         )}
@@ -121,10 +121,10 @@ export function DepartmentsPage() {
               Ativo
             </label>
             <div className="flex justify-end gap-2">
-              <button type="button" onClick={() => setOpen(false)} className="rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
+              <button type="button" onClick={() => setOpen(false)} className="nx-btn nx-btn-secondary rounded-md border border-[var(--nx-border)] px-3 py-1.5 text-sm">
                 Cancelar
               </button>
-              <button type="submit" className="rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
+              <button type="submit" className="nx-btn nx-btn-primary rounded-md bg-[var(--nx-accent)] px-3 py-1.5 text-sm font-medium text-[var(--nx-accent-fg)]">
                 Salvar
               </button>
             </div>
